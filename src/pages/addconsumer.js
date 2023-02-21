@@ -16,15 +16,17 @@ const AddData = () => {
 
     // Get data from the form.
     const params = {
-      TableName: "Users",
+      TableName: "Consumers",
       Item: {
         id: Math.floor(Math.random() * 10000),
         dateAdded: new Date().toLocaleString(),
         dateModified: "",
-        manufacturerName: event.target.ManufacturerName.value,
-        lastName: event.target.lastName.value,
-        productName: event.target.productName.value,
+        consumerName: event.target.consumerName.value,
+        consumerDetails: event.target.consumerDetails.value,
         city: event.target.city.value,
+        productPrice: event.target.productPrice.value,
+        productCategory: event.target.productCategory.value,
+        productName: event.target.productName.value,
         phoneNumber: event.target.phoneNumber.value,
       },
     };
@@ -33,7 +35,7 @@ const AddData = () => {
       const data = await ddbDocClient.send(new PutCommand(params));
       console.log("Success - item added", data);
       alert("Data Added Successfully");
-      router.push("/viewdata");
+      router.push("/viewconsumer");
       document.getElementById("addData-form").reset();
     } catch (err) {
       console.log("Error", err.stack);
@@ -42,26 +44,39 @@ const AddData = () => {
   return (
     <>
       <div className="flex flex-col justify-center items-center h-screen">
-        <p className="text-3xl mb-20">Add Data</p>
+        <p className="text-3xl mb-10">Add Data</p>
+        <h1 className="text-4xl mb-2 mt-5 bold">
+              Add Consumer Details
+            </h1>
         <div className="block p-6 rounded-lg shadow-lg bg-white w-1/3 justify-self-center">
           <form onSubmit={handleSubmit} id="addData-form">
+           
             <div className="form-group mb-6">
               <label
-                htmlFor="ManufacturerName"
+                htmlFor="consumerName"
                 className="form-label inline-block mb-2 text-gray-700"
               >
-                Manufacturer Name
+                Consumer Name
               </label>
-              <input type="text" className={styles.inputField} id="ManufacturerName" />
+              <input type="text" className={styles.inputField} id="consumerName" />
             </div>
             <div className="form-group mb-6">
               <label
-                htmlFor="lastName"
+                htmlFor="consumerDetails"
                 className="form-label inline-block mb-2 text-gray-700"
               >
-                Last Name
+                Consumer Details
               </label>
-              <input type="text" className={styles.inputField} id="lastName" />
+              <input type="text" className={styles.inputField} id="consumerDetails" />
+            </div>
+            <div className="form-group mb-6">
+              <label
+                htmlFor="exampleInputEmail1"
+                className="form-label inline-block mb-2 text-gray-700"
+              >
+                Location
+              </label>
+              <input type="text" className={styles.inputField} id="city" />
             </div>
             <div className="form-group mb-6">
               <label
@@ -74,12 +89,21 @@ const AddData = () => {
             </div>
             <div className="form-group mb-6">
               <label
-                htmlFor="exampleInputEmail1"
+                htmlFor="productName"
                 className="form-label inline-block mb-2 text-gray-700"
               >
-                City
+                Product Price
               </label>
-              <input type="text" className={styles.inputField} id="city" />
+              <input type="text" className={styles.inputField} id="productPrice" />
+            </div>
+            <div className="form-group mb-6">
+              <label
+                htmlFor="productName"
+                className="form-label inline-block mb-2 text-gray-700"
+              >
+                Product Category
+              </label>
+              <input type="text" className={styles.inputField} id="productCategory" />
             </div>
             <div className="form-group mb-6">
               <label
@@ -94,7 +118,6 @@ const AddData = () => {
                 id="phoneNumber"
               />
             </div>
-
             <button
               type="submit"
               className="

@@ -17,17 +17,20 @@ const UpdateData = () => {
 
     // setting up the parameters for UpdateCommand
     const params = {
-      TableName: "Users",
+      TableName: "Consumers",
       Key: {
         id: Number(data.id), //primaryKey
         dateAdded: data.dateAdded, //sortKey
       },
       UpdateExpression:
-        "set firstName = :p, lastName = :r, city = :q, phoneNumber = :z, dateModified = :k",
+        "set consumerName = :a, consumerDetails = :b, city = :c, productName =:d, productPrice =:e, productCategory = :f, phoneNumber = :z, dateModified = :k",
       ExpressionAttributeValues: {
-        ":p": event.target.firstName.value,
-        ":r": event.target.lastName.value,
-        ":q": event.target.city.value,
+        ":a": event.target.consumerName.value,
+        ":b": event.target.consumerDetails.value,
+        ":c": event.target.city.value,
+        ":d": event.target.productName.value,
+        ":e": event.target.productPrice.value,
+        ":f": event.target.productCategory.value,
         ":z": event.target.phoneNumber.value,
         ":k": new Date().toLocaleString(),
       },
@@ -38,7 +41,7 @@ const UpdateData = () => {
       const data = await ddbDocClient.send(new UpdateCommand(params));
       console.log("Success - updated", data);
       alert('Data Updated Successfully')
-      router.push('/viewdata')
+      router.push('/viewconsumer')
     } catch (err) {
       console.log("Error", err);
     }
@@ -47,45 +50,48 @@ const UpdateData = () => {
   return (
     <>
       <div className="flex flex-col justify-center items-center h-screen">
-        <p className="text-3xl mb-20">Update Data</p>
+      <p className="text-3xl mb-10">Add Data</p>
+        <h1 className="text-4xl mb-2 mt-5 bold">
+              Update Consumer Details
+            </h1>
         <div className="block p-6 rounded-lg shadow-lg bg-white w-1/3 justify-self-center">
           <form onSubmit={handleSubmit} id="addData-form">
             <div className="form-group mb-6">
               <label
-                htmlFor="firstName"
+                htmlFor="consumerName"
                 className="form-label inline-block mb-2 text-gray-700"
               >
-                First Name
+                Consumer Name
               </label>
               <input
                 type="text"
                 className={styles.inputField}
-                id="firstName"
-                name="firstName"
-                defaultValue={data.firstName}
+                id="consumerName"
+                name="consumerName"
+                defaultValue={data.consumerName}
               />
             </div>
             <div className="form-group mb-6">
               <label
-                htmlFor="lastName"
+                htmlFor="consumerDetails"
                 className="form-label inline-block mb-2 text-gray-700"
               >
-                Last Name
+                Consumer Details
               </label>
               <input
                 type="text"
                 className={styles.inputField}
-                id="lastName"
-                name="lastName"
-                defaultValue={data.lastName}
+                id="consumerDetails"
+                name="consumerDetails"
+                defaultValue={data.consumerDetails}
               />
             </div>
             <div className="form-group mb-6">
               <label
-                htmlFor="exampleInputEmail1"
+                htmlFor="city"
                 className="form-label inline-block mb-2 text-gray-700"
               >
-                City
+                Location
               </label>
               <input
                 type="text"
@@ -95,6 +101,51 @@ const UpdateData = () => {
                 defaultValue={data.city}
               />
             </div>
+            <div className="form-group mb-6">
+              <label
+                htmlFor="productName"
+                className="form-label inline-block mb-2 text-gray-700"
+              >
+                Product Name
+              </label>
+              <input
+                type="text"
+                className={styles.inputField}
+                id="productName"
+                name="productName"
+                defaultValue={data.productName}
+              />
+            </div>
+            <div className="form-group mb-6">
+              <label
+                htmlFor="productPrice"
+                className="form-label inline-block mb-2 text-gray-700"
+              >
+                Product Price
+              </label>
+              <input
+                type="text"
+                className={styles.inputField}
+                id="productPrice"
+                name="productPrice"
+                defaultValue={data.productPrice}
+              />
+            </div>
+            <div className="form-group mb-6">
+              <label
+                htmlFor="productCategory"
+                className="form-label inline-block mb-2 text-gray-700"
+              >
+                Product Category
+              </label>
+              <input
+                type="text"
+                className={styles.inputField}
+                id="productCategory"
+                name="productCategory"
+                defaultValue={data.productCategory}
+              />
+            </div> 
             <div className="form-group mb-6">
               <label
                 htmlFor="phoneNumber"

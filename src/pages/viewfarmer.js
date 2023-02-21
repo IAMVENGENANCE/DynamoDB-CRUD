@@ -18,7 +18,7 @@ const ViewData = () => {
   //   scanning the dynamodb table
   const scanTable = async () => {
     try {
-      data = await ddbDocClient.send(new ScanCommand({ TableName: "Users" }));
+      data = await ddbDocClient.send(new ScanCommand({ TableName: "Farmers" }));
       setTableData(data.Items);
       console.log("success", data.Items);
     } catch (err) {
@@ -31,7 +31,7 @@ const ViewData = () => {
     try {
       await ddbDocClient.send(
         new DeleteCommand({
-          TableName: "Users",
+          TableName: "Farmers",
           Key: {
             id: primaryKeyValue, // primarykeyName : primaryKeyValue
             dateAdded: sortKeyValue, // sortkeyName : sortkeyValue
@@ -54,19 +54,19 @@ const ViewData = () => {
       <div className="flex w-2/3 justify-end py-4">
         <Link
           href={{
-            pathname: "/adddata",
+            pathname: "/addfarmer",
           }}
         >
           <button
             type="button"
             className="inline-block px-6 py-2.5 mr-2 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
           >
-            Add Data
+            Add Farmer Data
           </button>
         </Link>
       </div>
-      <p className="text-3xl">View Data</p>
-      <div className="flex flex-col w-2/3 py-10">
+      <p className="text-3xl">View Farmer Data</p>
+      <div className="flex flex-col  py-10">
         <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
             <div className="overflow-hidden">
@@ -77,16 +77,22 @@ const ViewData = () => {
                       id
                     </th>
                     <th scope="col" className={Styles.tableHeadings}>
-                      First Name
+                      Manufacturer Name
                     </th>
                     <th scope="col" className={Styles.tableHeadings}>
-                      Last Name
+                      Manufacturer Details
+                    </th>
+                    <th scope="col" className={Styles.tableHeadings}>
+                      Location
                     </th>
                     <th scope="col" className={Styles.tableHeadings}>
                       Product Name
                     </th>
                     <th scope="col" className={Styles.tableHeadings}>
-                      City
+                      Product Price
+                    </th>
+                    <th scope="col" className={Styles.tableHeadings}>
+                      Product Category
                     </th>
                     <th scope="col" className={Styles.tableHeadings}>
                       Phone Number
@@ -106,22 +112,28 @@ const ViewData = () => {
                         {item.id}
                       </td>
                       <td className={Styles.tableData}>{item.manufacturerName}</td>
-                      <td className={Styles.tableData}>{item.lastName}</td>
-                      <td className={Styles.tableData}>{item.productName}</td>
+                      <td className={Styles.tableData}>{item.manufacturerDetails}</td>
                       <td className={Styles.tableData}>{item.city}</td>
+                      <td className={Styles.tableData}>{item.productName}</td>
+                      <td className={Styles.tableData}>{item.productPrice}</td>
+                      <td className={Styles.tableData}>{item.productCategory}</td>
+            
                       <td className={Styles.tableData}>{item.phoneNumber}</td>
                       <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-center">
                         <Link
                           href={{
-                            pathname: "/updatedata",
+                            pathname: "/updatefarmerdata",
                             query: {
                               id: item.id,
                               dateAdded: item.dateAdded,
                               manufacturerName: item.manufacturerName,
-                              lastName: item.lastName,
+                              manufacturerDetails: item.manufacturerDetails,
                               productName:item.productName,
                               city: item.city,
                               phoneNumber: item.phoneNumber,
+                              productPrice: item.productPrice,
+                              productCategory: item.productCategory,
+                              
                             },
                           }}
                         >

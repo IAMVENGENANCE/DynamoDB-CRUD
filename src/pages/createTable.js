@@ -32,7 +32,7 @@ export const params = {
     ReadCapacityUnits: 6,
     WriteCapacityUnits: 6,
   },
-  TableName: "Farmers", //TABLE_NAME
+  TableName: "Consumers", //TABLE_NAME
   StreamSpecification: {
     StreamEnabled: true,
     StreamViewType: "KEYS_ONLY",
